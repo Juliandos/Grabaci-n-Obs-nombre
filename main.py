@@ -1,10 +1,15 @@
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 import time
+import tkinter as tk
+from tkinter import simpledialog
 
 class WatchdogHandler(FileSystemEventHandler):
     def on_created(self, event):
         print(f"Archivo o carpeta creado: {event.src_path}")
+        user_input = prompt_user_input()
+        if user_input:
+            print(f"Texto ingresado: {user_input}")
 
     def on_deleted(self, event):
         print(f"Archivo o carpeta eliminado: {event.src_path}")
@@ -14,6 +19,18 @@ class WatchdogHandler(FileSystemEventHandler):
 
     def on_moved(self, event):
         print(f"Archivo o carpeta movido: {event.src_path} a {event.dest_path}")
+
+# Función para desplegar el cuadro de texto con tkinter
+def prompt_user_input():
+    # Crear una ventana de tkinter
+    root = tk.Tk()
+    root.withdraw()  # Ocultar la ventana principal
+
+    # Mostrar un cuadro de diálogo para que el usuario ingrese texto
+    user_input = simpledialog.askstring("Input", "Archivo modificado. Ingresa un texto:")
+
+    root.destroy()  # Destruir la ventana después de cerrar el cuadro de diálogo
+    return user_input
 
 def start_monitoring(folder_to_watch):
     event_handler = WatchdogHandler()
