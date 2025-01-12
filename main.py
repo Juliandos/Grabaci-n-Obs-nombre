@@ -33,5 +33,5 @@ def start_monitoring(folder_to_watch):
     observer.join()
 
 if __name__ == "__main__":
-    folder_to_watch = "/"  # Cambia esto por la ruta de la carpeta que quieres supervisar
+    folder_to_watch = "c:/Users/ASUS/Videos"  # Cambia esto por la ruta de la carpeta que quieres supervisar
     start_monitoring(folder_to_watch)
