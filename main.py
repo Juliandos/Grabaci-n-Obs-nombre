@@ -17,7 +17,13 @@ class WatchdogHandler(FileSystemEventHandler):
         print(f"Archivo o carpeta modificado: {event.src_path}")
         user_input = prompt_user_input(event.src_path)
         if user_input:
-            print(f"Texto ingresado: {user_input}")
+            if validar_nombre_archivo(event.src_path):
+                if renombrar_archivo(event.src_path, user_input):
+                    print(f"Archivo renombrado: {user_input}")
+                else:
+                    print("Error al renombrar el archivo.")
+            else:
+                print("Nombre de archivo inválido.")
 
     def on_moved(self, event):
         print(f"Archivo o carpeta movido: {event.src_path} a {event.dest_path}")
@@ -77,7 +83,8 @@ def prompt_user_input(route):
     root = tk.Tk()
     root.withdraw()  # Ocultar la ventana principal
 
-    # Mostrar un cuadro de diálogo para que el usuario ingrese texto
+    route = route.split('/')[-1]
+
     user_input = simpledialog.askstring("Input", "Archivo modificado. Ingresa un texto:", initialvalue = route)
 
     root.destroy()  # Destruir la ventana después de cerrar el cuadro de diálogo
