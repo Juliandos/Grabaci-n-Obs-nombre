@@ -22,6 +22,22 @@ class WatchdogHandler(FileSystemEventHandler):
     def on_moved(self, event):
         print(f"Archivo o carpeta movido: {event.src_path} a {event.dest_path}")
 
+def renombrar_archivo(archivo_actual, nuevo_nombre):
+    """
+    Renombra un archivo o carpeta según el nuevo nombre.
+    
+    Args:
+        archivo_actual (str): Ruta del archivo o carpeta actual.
+        nuevo_nombre (str): Nuevo nombre para el archivo o carpeta.
+    """
+    try:
+        directorio,_= os.path.split(archivo_actual)
+        nueva_ruta = os.path.join(directorio, nuevo_nombre)
+        os.rename(archivo_actual, nueva_ruta)
+        return True
+    except Exception as e:
+        print(f"Error al renombrar el archivo: {e}")
+
 def validar_nombre_archivo(nombre_archivo):
     """
     Valida el nombre de un archivo o carpeta según los requisitos de Windows y Linux/macOS.
