@@ -25,9 +25,6 @@ class WatchdogHandler(FileSystemEventHandler):
             else:
                 print("Nombre de archivo inválido.")
 
-    def on_moved(self, event):
-        print(f"Archivo o carpeta movido: {event.src_path} a {event.dest_path}")
-
 def renombrar_archivo(archivo_actual, nuevo_nombre):
     """
     Renombra un archivo o carpeta según el nuevo nombre.
